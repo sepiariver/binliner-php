@@ -2,19 +2,23 @@
 
 namespace SepiaRiver;
 
-use Exception\BinlinerException;
-use Stringable;
+use SepiaRiver\BinlinerException;
+use SepiaRiver\Validation;
+
+interface Stringable {
+    public function __toString(): string;
+}
 
 class Binliner implements Stringable
 {
     protected $size = 0;
     protected $value = '';
-    protected $validation = '';
+    protected $validation = null;
 
     public function __construct($config = null, ...$args)
     {
         $this->size = count($args);
-        $this->validation = str_pad('', $this->size, '1');
+        $this->validation = new Validation(str_pad('', $this->size, '1'));
         if (is_array($config)) {
             // Size
             if (isset($config['size']) && is_int($config['size'])) {
@@ -24,17 +28,8 @@ class Binliner implements Stringable
                 }
             }
             // Validation
-            if (
-                isset($config['validation']) &&
-                (
-                    is_callable($config['validation']) ||
-                    in_array(
-                        gettype($config['validation']),
-                        ['string', 'integer', 'array']
-                    )
-                )
-            ) {
-                $this->validation = $config['validation'];
+            if (isset($config['validation'])) {
+                $this->validation = new Validation($config['validation']);
             }
         }
         foreach ($args as $arg) {
@@ -45,13 +40,7 @@ class Binliner implements Stringable
 
     public function juggle($input, string $type)
     {
-        switch($type) {
-            case 'integer':
-                return intval($input, 2);
-            case 'string':
-            default:
-                return (string)$input;
-        }
+        return $this->validation->juggle($input, $type);
     }
 
     public function __toString(): string
@@ -59,7 +48,7 @@ class Binliner implements Stringable
         return $this->juggle($this->value, 'string');
     }
 
-    public function intval(): int
+    public function toInt(): int
     {
         return $this->juggle($this->value, 'integer');
     }
@@ -68,13 +57,26 @@ class Binliner implements Stringable
     {
         $pos = abs($pos);
         if ($pos > ($this->size - 1)) {
-          throw new BinlinerException('Illegal position: ' . $pos);
+            throw new BinlinerException("Illegal position: {$pos}");
         }
-        $sequence = str_split($this->value);
-        if (is_array($sequence)) {
-            $sequence[$pos] = !($value) ? '0' : '1';
-        }
+        $sequence = str_split((string)$this->value);
+        $sequence[$pos] = !($value) ? '0' : '1';
         $this->value = implode('', $sequence);
         return $this;
-      }
+    }
+
+    public function get($pos, $type = 'integer')
+    {
+        $pos = abs($pos);
+        if ($pos > ($this->size - 1)) {
+            throw new BinlinerException("Illegal position: {$pos}");
+        }
+        $sequence = str_split((string)$this->value);
+        return $this->juggle($sequence[$pos], $type);
+    }
+
+    public function isValid(): bool
+    {
+        return $this->validation->isValid($this->value);
+    }
 }

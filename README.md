@@ -6,26 +6,26 @@ Binary Sequence Validator for PHP
 
 ### What is it?
 
-Binliner is like a factory for [state machines](https://en.wikipedia.org/wiki/Finite-state_machine). Given the parameter `config.size`, an instance is endowed with a finite number of possible states, which may be configured as valid, to the exclusion of all other states, using the `config.validation` parameter.
+Binliner is like a factory for [state machines](https://en.wikipedia.org/wiki/Finite-state_machine). Given the parameter `$config['size']`, an instance is endowed with a finite number of possible states, which may be configured as valid, to the exclusion of all other states, using the `$config['validation']` parameter.
 
 The `isValid()` method returns a boolean: whether the current state is one of those configured as valid, like an [Acceptor](https://en.wikipedia.org/wiki/Finite-state_machine#Acceptors). The instance can be coerced into a `string` or `number` returning the respective representation of the state, like a [Classifier](https://en.wikipedia.org/wiki/Finite-state_machine#Classifiers). This output can be mapped to another set of values that serve a particular business case—the implementation on the whole then acting like a [Moore machine](https://en.wikipedia.org/wiki/Moore_machine).
 
-By passing a function to `config.validation`, Binliner's deterministic behaviour can be side-stepped, introducing side-effects or any other custom validation logic required. At that point, Binliner's utility might be brought into question, although it does seem to help elucidate complex conditional logic.
+By passing a function to `$config['validation']`, Binliner's deterministic behaviour can be side-stepped, introducing side-effects or any other custom validation logic required. At that point, Binliner's utility might be brought into question, although it does seem to help elucidate complex conditional logic.
 
 ### What it is not
 
-Binliner is not a garbage-collection utility, despite the name. Since it validates a binary sequence against configured rules, it can be said to catch errors aka "catch garbage" like a binliner :)
+Binliner is not a garbage-collection utility, despite the name. It "lines up" binary flags in a squence, and since it validates the sequence against configured rules, it can be said to catch errors aka "catch garbage" like a binliner :)
 
 ### What is a binary sequence?
 
-It is a series of bits, each of which has a value of either 0 or 1. It is typically used for data transmission, compression or storage, but also can be used for error detection and correction, among other uses. By encapsulating arbitrary boolean conditions using the implicit ordering of numerically-indexed Arrays, Binliner can faciliate complex control flows in a more compact yet still transparent/readable way.
+It is a series of bits, each of which has a value of either 0 or 1. It is typically used for data transmission, compression or storage, but also can be used for error detection and correction, among other uses. By encapsulating arbitrary boolean conditions using the implicit ordering of numerically-indexed arrays, Binliner can faciliate complex control flows in a more compact yet still transparent/readable way.
 
 For trivial control flows, Binliner is probably ill-suited, but it can be helpful in more complex cases. It also allows re-use of the condition state.
 
 ## Installation
 
 ```cli
-composer install sepiariver/binliner-php
+composer require sepiariver/binliner-php
 ```
 
 ## Usage

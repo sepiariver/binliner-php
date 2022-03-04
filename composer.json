@@ -1,0 +1,33 @@
+{
+    "name": "sepiariver/binliner-php",
+    "description": "A Binary Sequence Validator for PHP",
+    "keywords": [
+        "binary",
+        "sequence",
+        "tree",
+        "heap",
+        "validator",
+        "conditional logic"
+    ],
+    "homepage": "https://github.com/sepiariver/binliner-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "YJ Tso",
+            "homepage": "https://sepiariver.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "SepiaRiver\\": [
+                "src/"
+            ]
+        }
+    }
+}

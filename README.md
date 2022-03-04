@@ -14,7 +14,7 @@ By passing a function to `$config['validation']`, Binliner's deterministic behav
 
 ### What it is not
 
-Binliner is not a garbage-collection utility, despite the name. It "lines up" binary flags in a squence, and since it validates the sequence against configured rules, it can be said to catch errors aka "catch garbage" like a binliner :)
+Binliner is not a garbage-collection utility, despite the name. It "lines up" binary flags in a sequence, and since it validates the sequence against configured rules, it can be said to catch errors aka "catch garbage" like a binliner :)
 
 ### What is a binary sequence?
 

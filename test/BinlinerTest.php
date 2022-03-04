@@ -170,4 +170,15 @@ final class BinlinerTest extends TestCase
         $config = ['size' => 5, 'validation' => new stdClass()];
         $bin = new Binliner($config);
     }
+
+    public function testToInt()
+    {
+        $config = ['size' => 2, 'validation' => '11'];
+        $bin = new Binliner($config, true, true);
+        $this->assertTrue($bin->isValid());
+        $this->assertEquals(3, $bin->toInt());
+        $bin = new Binliner($config, [], true);
+        $this->assertEquals(1, $bin->toInt());
+        $this->assertFalse($bin->isValid());
+    }
 }

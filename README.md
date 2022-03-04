@@ -34,16 +34,18 @@ composer require sepiariver/binliner-php
 
 > If Bob's age is less than 21, reject. If his age is 21 to 65, check his license, and reject if invalid. If he is over 65 and has a valid license, re-test. If he fails the test, or lacks a valid license, reject.
 
-```js
-import Binliner from 'binliner-js';
+```php
+use SepiaRiver\Binliner;
 
-let bob = {
+class Bob
+{
     // define bob
 };
-const ofAge = (bob.age > 20);               // Postiion 0 in the sequence
-const needsRetest = (bob.age > 65);         // Position 1
-const validLicense = (bob.license.valid);   // Position 2
-const passedTest = (bob.test.results > 60); // Position 3
+$bob = new Bob();
+$ofAge = ($bob->age > 20);               // Postiion 0 in the sequence
+$needsRetest = ($bob->age > 65);         // Position 1
+$validLicense = ($bob->license.valid);   // Position 2
+$passedTest = ($bob->test.results > 60); // Position 3
 
 /**
  * Truth table
@@ -55,29 +57,29 @@ const passedTest = (bob.test.results > 60); // Position 3
  * ALL OTHER STATES ARE INVALID 
  */
 
-const config = {
-    size: 4,
-    validation: ['1010', '1011', '1111']
-}
-const binliner = new Binliner(
-    config,
-    ofAge,
-    needsRetest,
-    validLicense,
-    passedTest
+$config = [
+    'size' => 4,
+    'validation' => ['1010', '1011', '1111'],
+];
+$binliner = new Binliner(
+    $config,
+    $ofAge,
+    $needsRetest,
+    $validLicense,
+    $passedTest
 );
 
-if (!binliner.isValid()) {
+if (!$binliner->isValid()) {
     // Reject
-    throw 'Invalid state!';
+    throw new Exception('Invalid state!');
 }
-// Just for convenience you can reason about parseInt(binliner.value, 2);
-if (Number(binliner) < 12) {
+// Just for convenience you can reason about intval((string)$binliner, 2);
+if ($binliner->toInt() < 12) {
     // Accept
     return true;
 }
 // The only remaining valid state is '1111'
-return handlePassedRetest(bob);
+return handlePassedRetest($bob);
 ```
 
 See [test/Examples.php](test/Examples.php) for more.
@@ -86,7 +88,7 @@ See [test/Examples.php](test/Examples.php) for more.
 
 1. Clone this repo
 2. `composer install`
-3. `phpunit`
+3. `vendor/bin/phpunit`
 
 ## Contributing
 

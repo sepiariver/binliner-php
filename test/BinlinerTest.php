@@ -162,4 +162,12 @@ final class BinlinerTest extends TestCase
         $bin = new Binliner($config, true, true, -1);
         $bin->set(5, true);
     }
+
+    public function testThrowsExceptionOnInvalidValidation()
+    {
+        $this->expectException(BinlinerException::class);
+        $this->expectExceptionMessage('Invalid validation type: object');
+        $config = ['size' => 5, 'validation' => new stdClass()];
+        $bin = new Binliner($config);
+    }
 }

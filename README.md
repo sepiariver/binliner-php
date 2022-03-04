@@ -8,7 +8,7 @@ Binary Sequence Validator for PHP
 
 Binliner is like a factory for [state machines](https://en.wikipedia.org/wiki/Finite-state_machine). Given the parameter `$config['size']`, an instance is endowed with a finite number of possible states, which may be configured as valid, to the exclusion of all other states, using the `$config['validation']` parameter.
 
-The `isValid()` method returns a boolean: whether the current state is one of those configured as valid, like an [Acceptor](https://en.wikipedia.org/wiki/Finite-state_machine#Acceptors). The instance can be coerced into a `string` or `number` returning the respective representation of the state, like a [Classifier](https://en.wikipedia.org/wiki/Finite-state_machine#Classifiers). This output can be mapped to another set of values that serve a particular business case—the implementation on the whole then acting like a [Moore machine](https://en.wikipedia.org/wiki/Moore_machine).
+The `isValid()` method returns a boolean: whether the current state is one of those configured as valid, like an [Acceptor](https://en.wikipedia.org/wiki/Finite-state_machine#Acceptors). The instance can be coerced into a `string` or converted to a `number`, in both cases returning the respective representation of the state, like a [Classifier](https://en.wikipedia.org/wiki/Finite-state_machine#Classifiers). This output can be mapped to another set of values that serve a particular business case—the implementation on the whole then acting like a [Moore machine](https://en.wikipedia.org/wiki/Moore_machine).
 
 By passing a function to `$config['validation']`, Binliner's deterministic behaviour can be side-stepped, introducing side-effects or any other custom validation logic required. At that point, Binliner's utility might be brought into question, although it does seem to help elucidate complex conditional logic.
 
@@ -33,6 +33,8 @@ composer require sepiariver/binliner-php
 ### Example
 
 > If Bob's age is less than 21, reject. If his age is 21 to 65, check his license, and reject if invalid. If he is over 65 and has a valid license, re-test. If he fails the test, or lacks a valid license, reject.
+
+Note: this example is not intended to condone ageism
 
 ```php
 use SepiaRiver\Binliner;
@@ -82,7 +84,7 @@ if ($binliner->toInt() < 12) {
 return handlePassedRetest($bob);
 ```
 
-See [test/Examples.php](test/Examples.php) for more.
+See [test/ExamplesTest.php](test/ExamplesTest.php) for more.
 
 ## Testing
 

@@ -30,12 +30,11 @@ final class ExamplesTest extends TestCase
                 $valid = false; // third depends on second
                 return $valid;
             }
+            $valid = true;
             if ($second && $third) {
-                $valid = true;
                 $doThing($ns, 'second and third are both true, continue');
             }
             if (!$second && !$third) {
-                $valid = true;
                 $doThing($ns, 'second and third are both false, continue');
             }
             if ($fourth) {

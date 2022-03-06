@@ -59,9 +59,7 @@ class Binliner implements Stringable
         if ($pos > ($this->size - 1)) {
             throw new BinlinerException("Illegal position: {$pos}");
         }
-        $sequence = str_split((string)$this->value);
-        $sequence[$pos] = !($value) ? '0' : '1';
-        $this->value = implode('', $sequence);
+        $this->value[$pos] = !($value) ? '0' : '1';
         return $this;
     }
 
@@ -71,8 +69,7 @@ class Binliner implements Stringable
         if ($pos > ($this->size - 1)) {
             throw new BinlinerException("Illegal position: {$pos}");
         }
-        $sequence = str_split((string)$this->value);
-        return $this->juggle($sequence[$pos], $type);
+        return $this->juggle($this->value[$pos], $type);
     }
 
     public function isValid(): bool
